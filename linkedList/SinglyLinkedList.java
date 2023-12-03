@@ -2,7 +2,7 @@ package linkedList;
 
 public class SinglyLinkedList {
 
-    Node head;
+   Node head;
     Node tail;
     public static void main(String[] args)  {
 
@@ -15,21 +15,18 @@ public class SinglyLinkedList {
             list.addNodeInLast(150);
             list.addNodeInLast(300);
             list.displayLinkedList();
-            list.deleteHead();
-            list.displayLinkedList();
+            System.out.println(list.deleteAnyNode(300));
+            list.displayLinkedList();;
 
         }catch(Exception a)
         {
             System.out.println("error"+a);
         }
 
-
-
     }
 
     public void addNodeInFront(int value)
     {
-        System.out.println("add node in front");
         Node node=new Node(value);
 
         node.next=head;
@@ -43,11 +40,9 @@ public class SinglyLinkedList {
 
     public void addNodeInLast(int value)
     {
-        System.out.println("add node in Last");
+      Node node=new Node(value);
 
-        Node node=new Node(value);
-
-        Node current=head;
+      Node current=head;
 
         if(tail==null)
         {
@@ -68,7 +63,8 @@ public class SinglyLinkedList {
 
         System.out.println("Displaying Linked List");
 
-        Node current =head;
+
+       Node current =head;
 
         while(current!=null)
         {
@@ -79,24 +75,59 @@ public class SinglyLinkedList {
 
     }
 
-    public void deleteHead() throws Exception
+    public int deleteHeadNode() throws Exception
     {
+        int value=head.value;
         if(head==null)
         {
+            tail=null;
             throw new  Exception("Linked List is Empty");
         }
         head=head.next;
+        return value;
     }
 
-    public void deleteTail() throws Exception {
+    public int  deleteTailNode() throws Exception {
+
+        int value=0;
         if(head==null)
         {
             throw new  Exception("Linked List is Empty");
         }
 
-        Node current=head;
-        // ley write this later
+      Node current=head;
 
+       Node previous=current;
+
+        while(current.next!=null)
+        {
+          previous=current;
+          current=current.next;
+          value=current.value;
+        }
+
+        previous.next=null;
+
+
+        return value;
+    }
+
+
+    public int deleteAnyNode(int value)
+    {
+
+        Node current=head;
+
+        Node previous=null;
+        while(current.value!=value)
+        {
+            previous=current;
+            current=current.next;
+        }
+
+        previous.next=current.next;
+
+        return value;
     }
 
 }
@@ -104,11 +135,11 @@ public class SinglyLinkedList {
 class Node {
 
     int value;
-    Node next;
+   Node next;
     public Node(int value){
         this.value=value;
     }
-    public Node(int value,Node next)
+    public Node(int value, Node next)
     {
         this.value=value;
         this.next=next;
